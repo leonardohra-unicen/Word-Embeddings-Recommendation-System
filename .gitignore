@@ -1,2 +1,7 @@
 # Ignoring the dataset folder
 APIs
+
+# Ignoring dataset commit info, error file and data file
+dataset_info.txt
+data.txt
+error.txt
