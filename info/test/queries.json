@@ -1,0 +1,65 @@
+[
+  {
+    "query": "current weather",
+    "results": [
+      "./info/APIs/weatherbit.io/2.0.0/current?postal_code={postal_code}/get",
+      "./info/APIs/weatherbit.io/2.0.0/current?lat={lat}&lon={lon}/get",
+      "./info/APIs/geodesystems.com/1.0.0/repository/search/type/gadgets_weather/get",
+      "./info/APIs/netatmo.net/1.1.5/getpublicdata/get"
+
+    ]
+  },
+  {
+    "query": "upload a video on a platform",
+    "results": [
+      "./info/APIs/api.video/1/videos/post",
+      "./info/APIs/cpy.re/peertube/3.3.0/videos/upload/post",
+      "./info/APIs/vimeo.com/3.4/me/videos/post"
+    ]
+  },
+  {
+    "query": "send mail",
+    "results": [
+      "./info/APIs/googleapis.com/gmail/v1/gmail/v1/users/{userId}/messages/send/post"
+    ]
+  },
+  {
+    "query": "weather forecast",
+    "results": [
+      "./info/APIs/visualcrossing.com/weather/4.5/VisualCrossingWebServices/rest/services/weatherdata/forecast/get",
+      "./info/APIs/weatherbit.io/2.0.0/forecast/hourly?city={city}&country={country}/get"
+    ]
+  },
+  {
+    "query": "get text from audio",
+    "results": [
+      "./info/APIs/apptigent.com/2021.1.01/SpeechToText/post"
+    ]
+  },
+  {
+    "query": "translate text",
+    "results": [
+      "./info/APIs/apptigent.com/2021.1.01/TranslateString/post",
+      "./info/APIs/googleapis.com/translate/v3/v3/{parent}:translateDocument/post",
+      "./info/APIs/funtranslations.com/index/2.3/translate/vulcan/get",
+      "./info/APIs/funtranslations.com/index/2.3/translate/cockney/get",
+      "./info/APIs/funtranslations.com/index/2.3/translate/mandalorian/get",
+      "./info/APIs/fungenerators.com/pirate/1.5/pirate/translate/get"
+    ]
+  },
+  {
+    "query": "object recognition",
+    "results": [
+      "./info/APIs/azure.com/cognitiveservices-ComputerVision/1.0/ocr/post",
+      "./info/APIs/cloudmersive.com/ocr/v1/ocr/photo/toText/post",
+      "./info/APIs/microsoft.com/cognitiveservices-Ocr/2.1/read/core/asyncBatchAnalyze/post"
+
+    ]
+  },
+  {
+    "query": "get nearby restaurants",
+    "results": [
+      "./info/APIs/just-eat.co.uk/1.0.0/search/restaurants/{tenant}/get"
+    ]
+  }
+]
