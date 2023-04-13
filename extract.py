@@ -10,13 +10,13 @@ yaml = YAML()
 
 GITHUB_REPO_URL = 'https://api.github.com/repos/APIs-guru/openapi-directory/{action}/{ref}'
 APIS_SOURCE_FOLDER_NAME = 'APIs/'
-APIS_TARGET_FOLDER_NAME = './APIs/'
-DATASET_COMMIT_FILENAME = 'dataset_info.txt'
+APIS_TARGET_FOLDER_NAME = './info/APIs/'
+DATASET_COMMIT_FILENAME = './info/dataset_info.txt'
 
 
 def extract_oapi_data():
-    data_file = './data.txt'
-    error_file = './error.txt'
+    data_file = './info/data.txt'
+    error_file = './info/error.txt'
     data_file_exists = os.path.isfile(data_file)
     api_folder_exists = os.path.isdir(APIS_TARGET_FOLDER_NAME)
     if data_file_exists:
@@ -33,7 +33,7 @@ def extract_oapi_data():
     return data_list
 
 
-def download_raw_data(ref='main', target_folder_name='APIs'):
+def download_raw_data(ref='main', target_folder_name=APIS_TARGET_FOLDER_NAME):
     response = requests.get(GITHUB_REPO_URL.format(action='zipball', ref=ref))
     if response.ok:
         filename = get_repo_zip_filename(response.headers)
@@ -46,7 +46,7 @@ def download_raw_data(ref='main', target_folder_name='APIs'):
         delete_downloaded_zip(filename)
         save_dataset_commit(commit)
     else:
-        print('An error occurred when attepting to download Open API documentation')
+        print('An error occurred when attempting to download Open API documentation')
 
 
 def get_repo_zip_filename(headers):
@@ -97,7 +97,6 @@ def save_dataset_commit(commit):
 
 
 def load_list(file):
-    itemlist = []
     with open(file, 'rb') as fp:
         itemlist = pickle.load(fp)
     return itemlist
@@ -106,26 +105,27 @@ def load_list(file):
 def generate_list(file, error_file, dataset_location):
     data_list = {}
     unprocessed_data_list = {}
-    loc = os.getcwd() + '/APIs/'
+    loc = os.getcwd() + '/info/APIs/'
     accepted_meth = ['post', 'get', 'put', 'patch', 'delete']
     for base, _, files in os.walk(dataset_location):
         for f in files:
             if f == 'swagger.yaml' or f == 'openapi.yaml':
+                API = base.replace(loc, '')
                 try:
-                    API = base.replace(loc, '')
                     with open(os.path.join(base, f), encoding='utf8') as yaml_file:
                         data = yaml.load(yaml_file)
                     print((API + '/' + f))
                     data_list[API] = {'description': '', 'endpoints': {}}
-                    if ('info' in data and 'description' in data['info']):
+                    if 'info' in data and 'description' in data['info']:
                         data_list[API]['description'] = data['info']['description']
                     for api in data['paths'].keys():
                         for methodHTTP in data['paths'][api].keys():
-                            if(methodHTTP.lower() in accepted_meth):
-                                data_list[API]['endpoints'][api + '/' + methodHTTP] = {}
+                            if methodHTTP.lower() in accepted_meth:
+                                data_list[API]['endpoints'][api + '/' + methodHTTP] = ''
                                 if 'description' in list(data['paths'][api][methodHTTP].keys()):
-                                    data_list[API]['endpoints'][api + '/' + methodHTTP] = data['paths'][api][methodHTTP]['description']
-                except (Exception) as e:
+                                    data_list[API]['endpoints'][api + '/' + methodHTTP] = \
+                                        data['paths'][api][methodHTTP]['description']
+                except Exception as e:
                     print('Not processed: ' + API + '/' + f)
                     unprocessed_data_list[API] = {f, e}
                     pass
@@ -137,3 +137,4 @@ def generate_list(file, error_file, dataset_location):
 def save_list(file, itemlist):
     with open(file, 'wb') as fp:
         pickle.dump(itemlist, fp)
+
