@@ -2,6 +2,6 @@
 APIs
 
 # Ignoring dataset commit info, error file and data file
-dataset_info.txt
-data.txt
-error.txt
+info/dataset_info.txt
+info/data.txt
+info/error.txt
